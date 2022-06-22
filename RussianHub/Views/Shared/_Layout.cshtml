@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>@ViewData["Title"] - RussianHub</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RussianHub.styles.css" asp-append-version="true" />
+
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <meta name="viewport" content="width=1263px" /> -->
+
+    <meta name="viewport" content="width=device-widthб initial-scale=1.0" />
+</head>
+<body>
+    <div class="main_container">
+        <header class="header">
+            <div class="Navbar">
+                <div class="hidden_category">
+                    <span class="hidden_category__text">
+                        Категории
+                    </span>
+                </div>
+                <div class="home">
+                    <a class="" asp-controller="Home" asp-action="Index"> <img src="~/Img/RH_.jpg" height="" width="" /> </a>
+                </div>
+                <div class="Navbar-nav">
+                    <div class="Navbar-nav-top_menu">
+                        <div>
+                            <a asp-controller="Home" asp-action="Index">Видео</a>
+                        </div>
+                        <div>
+                            <a asp-controller="Home" asp-action="Models">Модели</a>
+                        </div>
+                        <div>
+                            <a asp-controller="Home" asp-action="Photos">Фото</a>
+                        </div>
+                        <div>
+                            <a asp-controller="Home" asp-action="Gifs">Гифки</a>
+                        </div>
+                        <div>
+                            <a asp-controller="Home" asp-action="Blog">Блог</a>
+                        </div>
+                    </div>
+
+                    <form class="form" asp-controller="Home" asp-action="Index">
+                        <div class="text_area">
+                            <input placeholder="Искать здесь" name="serachElm" />
+                        </div>
+                        <div class="search">
+                            <input type="image" src="/Img/search3.png" style="width: 32px; height: 32px">
+                        </div>
+                    </form>
+                    <div class="burger">
+                        <span></span>
+                    </div>
+
+                </div>
+
+                <div class="log">
+                    <a asp-controller="Home" asp-action="Bookmarks">Закладки</a>
+                    <partial name="_LoginPartial" />
+                </div>
+
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="wrap__content">
+                @await Component.InvokeAsync("CategoryList")
+                <div class="content-container">
+                    @RenderBody()
+                </div>
+            </div>
+        </main>
+
+
+        <footer class="_footer">
+            <div align="center">
+                <a asp-area="" asp-controller="Home" asp-action="Privacy">Конфиденциальность</a>
+                <a asp-area="" asp-controller="Home" asp-action="TermsOfUse">Условия использования</a>
+                <br />
+                &copy; 2022 - RussianHub
+            </div>
+        </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

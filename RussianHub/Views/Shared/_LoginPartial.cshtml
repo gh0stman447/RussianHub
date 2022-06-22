@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a asp-controller="Home" asp-action="Admin">Админ панель</a>
+    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity?.Name!</a>
+    <a  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        Выход
+    </a>
+}
+else
+{
+    <a asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+    <a asp-area="Identity" asp-page="/Account/Login">Вход</a>
+}

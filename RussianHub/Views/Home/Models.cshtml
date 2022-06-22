@@ -1,0 +1,81 @@
+﻿@model IEnumerable<RussianHub.Models.Actor>
+
+@{
+    ViewData["Title"] = "Модели";
+}
+
+<h1>Самые трендовые модели</h1>
+<div class="sort_block">
+    <div class="div_sort">
+        Пол:
+        <div class="model_do_filter" id="sort_id_3">
+            <a asp-controller="Home" asp-action="Models" asp-route-paramsForModel="Female">Женщины</a>
+            <div class="hidden_sort_sex">
+                <div >
+                    <a asp-controller="Home" asp-action="Models" asp-route-paramsForModel="Male">Мужчины</a>
+                </div>
+                <div>
+                    <a asp-controller="Home" asp-action="Models" asp-route-paramsForModel="All">Все</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="div_sort">
+        Сортировка:
+        <div class="model_do_filter" id="sort_id_4">
+            <a asp-controller="Home" asp-action="Models" asp-route-paramsForModel="New">Новые</a>
+            <div class="hidden_sort_value">
+                <div>
+                    По популярности
+
+                </div>
+                <div>
+                    <a asp-controller="Home" asp-action="Models" asp-route-paramsForModel="CountVeiw">По количеству</a>
+                </div>
+                <div>
+                    <a asp-controller="Home" asp-action="Models" asp-route-paramsForModel="Alpha">По алфавиту</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display: inline-block">
+    <form class="form" asp-controller="Home" asp-action="Models">
+        <div class="text_area">
+            <input placeholder="Поиск модели" name="paramsForModel" />
+        </div>
+        <div class="search">
+            <input type="image" src="/Img/search3.png" style="width: 32px; height: 32px">
+        </div>
+    </form>
+</div>
+<div class="content-item">
+    @foreach (var obj in Model)
+    {
+        <div class="model_block">
+            <a asp-controller="Home" asp-action="Index" asp-route-serachElm="@obj.Name">
+                <img class="model_img" src="@obj.LinkPhoto">
+                <div class="about_model">
+                    <div class="model_block__model_names">
+                        <div class="model_block__russian_name">
+                            @obj.Name
+                        </div>
+                        <div class="model_block__english_name">
+                            @obj.NameOnEnglish
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <div class="model_block__country">
+                <img src="https://cdn-icons-png.flaticon.com/512/321/321269.png" width="40px" height="30px" />
+            </div>
+            <div class="model_block__count_video">
+                @obj.CountVideos
+            </div>
+            <div class="model_block__video_img">
+                <img src="/img/video.png" height="30px" width="40px" />
+            </div>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,206 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model RussianHub.Models.Video
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Видео";
+    if (Model == null || Model.Genres == null)
+        return;
+    string[] genre = Model.Genres.Split('/');
+    string[] actor = null;
+    if (Model.Actors != null)
+        actor = Model.Actors.Split('/');
+    int i;
+}
+<head>
+    <meta charset="utf-8" />
+    <title>Embedded Video Example</title>
+</head>
+<body>
+    <div class="main_container">
+        <div class="container-block">
+            <div class="video-block">
+                <video id="my_video_1" class="video-js vjs-default-skin" width=100% height="551px"
+                       controls preload="none" poster='http://video-js.zencoder.com/oceans-clip.jpg'
+                       data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'>
+                    <source src="@Model.Link" type='video/mp4' />
+                    <source src="@Model.Link" type='video/webm' />
+                </video>
+                <div class="video-data">
+
+                    <div class="description">
+                        <h1>@Model.Name</h1>
+                    </div>
+
+                    <div class="video_favs">
+                        <div class="video_likes">
+                            @Model.bookMarks.Count
+                        </div>
+                        <div class="add_favorite">
+                            <form method="post">
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                      <input type="image" src="/img/like_fav.png" height="30px" width="32px" />
+                        
+                    }
+                    else
+                    {
+                        <input asp-controller="Videos" asp-action="AddBookMark" asp-route-id="@Model.Id" type="image" src="/img/like_fav.png" height="30px" width="32px" />
+                            
+                    }
+                           </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class=video-additions>
+                    <div class="kek">
+                        <div class="download">
+                            <img src="/img/skachat.png" height="17px" width="22px" />
+                            Cкачать
+                        </div>
+                        <div class="views">
+                            <div>
+                                Просмотров:
+                            </div>
+                            <div class="view-count">
+                                @Model.CountViews
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="grade">
+                        <div class="like">
+                            <img src="/img/laik.png" height="35px" width="40px" />
+                        </div>
+                        <div class="rating_score">
+                            <div class="percent">
+                                100%
+                            </div>
+                            <div class="vote">
+                                Голосов:100
+                            </div>
+                        </div>
+                        <div class="dislike">
+                            <img src="/img/dislaik.png" height="35px" width="40px" />
+                        </div>
+                    </div>
+                    <p>
+                        Категории:
+                        @for (i = 0; i < genre.Length; i++)
+                        {
+                            <span class="category_title">
+                                <a asp-controller="Home" asp-action="Index" asp-route-serachElm="@genre[i]">@genre[i]</a>
+                            </span>
+                        }
+                    </p>
+                    <p>
+                        Модели:
+                        @if (actor != null)
+                        {
+                            @for (i = 0; i < actor.Length; i++)
+                            {
+                                <span class="category_title">
+                                    <a asp-controller="Home" asp-action="Index" asp-route-serachElm="@actor[i]">@actor[i]</a>
+                                </span>
+
+                            }
+                            <div class="do_u_know category_title">
+                                <a>Знаете модель из видео?</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <a href="">Знаете модель из видео?</a>
+                        }
+                    </p>
+                    @if (Model.Description != null)
+                    {
+                        <div>@Model.Description</div>
+                    }
+                </div>
+                <div class="video-comments">
+                    <p> Комментарии (@Model.Comments.Count)</p>
+                    @foreach (var com in Model.Comments)
+                    {
+                        <div class="comment">
+                            <div class="comment-user comment_style">
+                                <div class="comment-user_name">
+                                    @com.Name
+                                </div>
+                                <div class="comment-user_photo">
+                                    <img src="/Img/anonim.jpg" height="100px" width="90px" />
+                                </div>
+                            </div>
+                            <div class="comment-message comment_style">
+                                <div class="comment_time">
+                                    @com.DataPublish
+                                </div>
+                                <div class="comment_text">
+                                    @com.Content
+                                </div>
+                                <div class="comment_down">
+                                    <div class="comment_reply">
+                                        Ответить
+
+                                    </div>
+                                    <div class="comment_rate">
+                                        <div class="comment_like">
+                                            <img src="/img/laik.png" height="15px" width="20px" />
+                                        </div>
+                                        <div class="comment-grade">
+                                            3
+                                        </div>
+                                        <div class="comment_dislike">
+                                            <img src="/img/dislaik.png" height="15px" width="20px" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <div class="helper">
+                            Чтобы оставить комментарий
+                            <a asp-area="Identity" asp-page="/Account/Login" class="to_log"> войдите</a>
+                            или
+                            <a asp-area="Identity" asp-page="/Account/Register" class="to_log">зарегистрируйтесь</a>
+                            или оставьте так:
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="helper">
+                            Оставьте комментарий:
+                        </div>
+                    }
+                    <form asp-controller="Videos" asp-action="AddComment" asp-route-id="@Model.Id" method="post">
+                        <div>
+                            <textarea class="comment_area" tabindex="1" type="text" name="text" id=> </textarea>
+                        </div>
+
+                        <div>
+                            @if (!SignInManager.IsSignedIn(User))
+                            {
+                                <input class="input" tabindex="2" type="text" name="username" placeholder="Ваше имя" />
+                            }
+                            <input type="submit" value="Отправить" />
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="other-video">
+                <div class="similar_video">
+                    Другие видео
+                </div>
+                <div class="content-item">
+                    @await Component.InvokeAsync("RealatedVideo", @Model.Id)
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
