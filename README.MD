@@ -53,3 +53,7 @@ https://docs.microsoft.com/ru-ru/sql/ssms/download-sql-server-management-studio-
 * **Mikhail Pechnikov** - *Backend* - [BioMihanoid](https://github.com/BioMihanoid)
 * **Oleg Malygin** - *Frontend* - [gh0stman447](https://github.com/gh0stman447)
 * **Andrey Klets** - *Backend* - [Andrei6115](https://github.com/Andrei6115)
+
+_____________________
+ 
+ See here the initial development of the project: https://github.com/BioMihanoid/RussianHub
